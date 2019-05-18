@@ -6,14 +6,25 @@ private:
     StringNode* next;
 
     friend class StringLinkedList;
+
+public:
+    const std::string& get_elem() const;
+    const StringNode* get_next() const;
 };
 
+const std::string& StringNode::get_elem() const {
+    return elem;
+}
+
+const StringNode* StringNode::get_next() const {
+    return next;
+}
 class StringLinkedList{
 public:
     StringLinkedList();
     ~StringLinkedList();
     bool empty() const;
-    const std::string& front() const;
+    const StringNode* front() const;
     void addFront(const std::string& e);
     void removeFront();
 
@@ -33,8 +44,8 @@ bool StringLinkedList::empty() const {
     return head == NULL;
 }
 
-const std::string& StringLinkedList::front() const {
-    return head->elem;
+const StringNode* StringLinkedList::front() const {
+    return head;
 }
 
 void StringLinkedList::addFront(const std::string &e) {
@@ -110,6 +121,12 @@ void SLinkedList<E>::removeFront() {
 }
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    StringLinkedList* test_list = new StringLinkedList();
+    test_list->addFront("World");
+    test_list->addFront("Hello");
+    std::cout << test_list->front()->get_elem() << std::endl;
+    std::cout << test_list->front()->get_next()->get_elem() << std::endl;
+    test_list->removeFront();
+    std::cout << test_list->front()->get_elem() << std::endl;
     return 0;
 }
