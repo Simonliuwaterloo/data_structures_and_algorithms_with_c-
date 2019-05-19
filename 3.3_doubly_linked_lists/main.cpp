@@ -43,50 +43,43 @@ public:
 
 protected:
     void insert_after(StringNode* prev_node, const std::string& e);
+    void remove(StringNode* node);
 };
 
 StringLinkedList::StringLinkedList() {
-    header = nullptr;
-    trailer = nullptr;
+    header = new StringNode;
+    trailer = new StringNode;
+    header->next = trailer;
+    trailer->prev = header;
 }
 
 StringLinkedList::~StringLinkedList() {
     while (!empty()) remove_front();
+    delete header;
+    header = nullptr;
+    delete trailer;
+    trailer = nullptr;
+}
+
+bool StringLinkedList::empty() {
+    { return (header->next == trailer);}
 }
 
 void StringLinkedList::remove_front() {
-    if (trailer->prev == header->next) trailer = nullptr;
-    StringNode* old = header->next;
-    header->next = old->next;
-    header->next->prev = header;
-    delete old;
+    remove(header->next);
 }
 
 void StringLinkedList::remove_back() {
-    if (trailer->prev == header->next) trailer = nullptr;
-    StringNode* old = trailer->prev;
-    trailer = old->prev;
-    trailer->prev->next = trailer;
-    delete old;
+    remove(trailer->prev);
 }
 
 void StringLinkedList::add_front(const std::string& e) {
-    StringNode* old = header->next;
-    header->next = new StringNode();
-    header->next->elem = e;
-    header->next->prev = header;
-    header->next->next = old;
-    old->prev = header->next;
+    insert_after(header, e);
     if (trailer->prev == nullptr) trailer ->prev = header->next;
 }
 
 void StringLinkedList::add_back(const std::string& e) {
-    StringNode* old = trailer->prev;
-    trailer->prev = new StringNode();
-    trailer->prev->elem = e;
-    trailer->prev->next = trailer;
-    trailer->prev->prev = old;
-    old->next = trailer->prev;
+    insert_after(trailer->prev, e);
     if (header->next == nullptr) header ->next = trailer->prev;
 }
 
@@ -106,6 +99,13 @@ StringNode* StringLinkedList::back() {
     else {
         return nullptr;
     }
+}
+
+void StringLinkedList::remove(StringNode* node) {
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+    delete node;
+    node = nullptr;
 }
 void StringLinkedList::insert_after(StringNode *prev_node, const std::string& e) {
     StringNode* inserted_node = new StringNode();
