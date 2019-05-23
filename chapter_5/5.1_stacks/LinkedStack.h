@@ -18,7 +18,6 @@ private:
 };
 
 LinkedStack::LinkedStack(){
-    SLinkedList<Elem> a;
     n = 0;
 }
 
