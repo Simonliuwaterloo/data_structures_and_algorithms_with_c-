@@ -18,6 +18,7 @@ private:
 };
 
 LinkedStack::LinkedStack(){
+    //note we didn't initialize S, default initialization will handle it
     n = 0;
 }
 
