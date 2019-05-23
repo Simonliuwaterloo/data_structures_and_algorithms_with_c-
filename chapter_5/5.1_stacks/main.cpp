@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <vector>
 //this is standard stack libratry
 #include "ArrayStack.h"
 #include "LinkedStack.h"
@@ -45,9 +46,30 @@ void linked_stack_sample() {
     std::cout << "--------------" << std::endl;
 
 }
+
+void reverse_vector_sample() {
+    //reverse vector using stack
+    std::vector<int> vect{10, 20, 30};
+    for (int x : vect)
+        std::cout << x << " ";
+    std::cout << std::endl;
+    ArrayStack<int> S(vect.size());
+    for (int i = 0; i < vect.size(); ++i){
+        S.push(vect[i]);
+    }
+    for (int i = 0; i < vect.size(); ++i){
+        vect[i] = S.top();
+        S.pop();
+    }
+    for (int x : vect)
+        std::cout << x << " ";
+    std::cout << std::endl;
+    std::cout << std::endl << "--------------" << std::endl;
+}
 int main() {
     standard_stack_sample();
     array_stack_sample();
     linked_stack_sample();
+    reverse_vector_sample();
     return 0;
 }
