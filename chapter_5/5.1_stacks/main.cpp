@@ -2,7 +2,7 @@
 #include <stack>
 //this is standard stack libratry
 #include "ArrayStack.h"
-
+#include "LinkedStack.h"
 void standard_stack_sample() {
     std::stack<int> my_stack;
     my_stack.push(5);
@@ -27,11 +27,27 @@ void array_stack_sample() {
     std::cout << A.top() << std::endl;
     A.push(4);
     std::cout << A.top() << std::endl;
-    A.push(5);
-    std::cout << A.top() << std::endl;
+//    A.push(5);
+//    std::cout << A.top() << std::endl;
+//throw an error
+    std::cout << "--------------" << std::endl;
+
+}
+
+void linked_stack_sample() {
+    LinkedStack L;
+    L.push("H");
+    std::cout << L.top() << std::endl;
+    L.push("e");
+    std::cout << L.top() << std::endl;
+    L.pop();
+    std::cout << L.top() << std::endl;
+    std::cout << "--------------" << std::endl;
+
 }
 int main() {
     standard_stack_sample();
     array_stack_sample();
+    linked_stack_sample();
     return 0;
 }
