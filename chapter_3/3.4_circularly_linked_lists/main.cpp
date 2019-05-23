@@ -5,8 +5,14 @@ private:
     Elem elem;
     CNode* next;
     friend class CLinkedList;
+
+public:
+    Elem get_elem();
 };
 
+Elem CNode::get_elem() {
+    return elem;
+}
 class CLinkedList{
 private:
     CNode* cursor;
@@ -18,6 +24,7 @@ public:
     void advance();
     void add(Elem e);
     void remove();
+    void reverseList();
 };
 
 CLinkedList::CLinkedList() {
@@ -65,7 +72,33 @@ void CLinkedList::remove() {
     delete old;
     old = nullptr;
 }
+
+void CLinkedList::reverseList() {
+    CLinkedList tmpList;
+    while(cursor != nullptr){
+        tmpList.add(front()->elem);
+        remove();
+    }
+    while(tmpList.cursor != nullptr){
+        this->add(tmpList.front()->elem);
+        tmpList.remove();
+    }
+}
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    CLinkedList list;
+    char greeting[13] = "Hello, world";
+    for (int i = 0; i < 12; ++i) {
+        list.add(std::string(1,greeting[i]));
+    }
+    for (int i = 0; i < 12; ++i) {
+        std::cout << list.front()->get_elem();
+        list.advance();
+    }
+    std::cout << std::endl;
+    list.reverseList();
+    for (int i = 0; i < 12; ++i) {
+        std::cout << list.front()->get_elem();
+        list.advance();
+    }
     return 0;
 }
