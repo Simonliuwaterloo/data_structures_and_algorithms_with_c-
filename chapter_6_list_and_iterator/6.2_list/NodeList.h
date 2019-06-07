@@ -82,7 +82,7 @@ void NodeList::insertBack(const Elem &e) {
 
 void NodeList::insert(const NodeList::Iterator &p, const Elem &e) {
     Node* old_back = p.v->prev;
-    Node* new_back;
+    Node* new_back = new Node;
     new_back->prev = old_back;
     new_back->next = p.v;
     new_back->elem = e;
