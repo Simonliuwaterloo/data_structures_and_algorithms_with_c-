@@ -2,8 +2,8 @@
 // Created by jianyan on 6/6/19.
 //
 
-#ifndef INC_6_2_LIST_DLINKEDLIST_H
-#define INC_6_2_LIST_DLINKEDLIST_H
+#ifndef INC_6_2_LIST_NODELIST_H
+#define INC_6_2_LIST_NODELIST_H
 typedef int Elem;
 struct Node {
     Elem elem;
@@ -18,5 +18,6 @@ public:
     bool operator!=(const Iterator& p) const;
     Iterator& operator++();
     Iterator& operator--();
+    friend class NodeList;
 };
-#endif //INC_6_2_LIST_DLINKEDLIST_H
+#endif //INC_6_2_LIST_NODELIST_H
