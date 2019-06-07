@@ -49,8 +49,10 @@ private:
 
 NodeList::NodeList() {
     n = 0;
-    header = nullptr;
-    trailer = nullptr;
+    header = new Node;
+    trailer = new Node;
+    header->next = trailer;
+    trailer->prev = header;
 }
 
 int NodeList::size() const {
@@ -66,25 +68,16 @@ NodeList::Iterator NodeList::begin() const {
 }
 
 NodeList::Iterator NodeList::end() const {
-    return Iterator(trailer->prev);
+    return Iterator(trailer);
+    //we define end position as just beyond last node
 }
 
 void NodeList::insertFront(const Elem &e) {
-    Node* old_front = header->next;
-    Node* new_front;
-    new_front->prev = header;
-    new_front->next = old_front;
-    new_front->elem = e;
-    header->next = new_front;
+    insert(begin(), e);
 }
 
 void NodeList::insertBack(const Elem &e) {
-    Node* old_back = trailer->prev;
-    Node* new_back;
-    new_back->next = trailer;
-    new_back->prev = old_back;
-    new_back->elem = e;
-    trailer->next = new_back;
+    insert(end(), e);
 }
 
 void NodeList::insert(const NodeList::Iterator &p, const Elem &e) {
@@ -95,26 +88,22 @@ void NodeList::insert(const NodeList::Iterator &p, const Elem &e) {
     new_back->elem = e;
     p.v->prev = new_back;
     old_back->next = new_back;
+    ++n;
 }
 
 void NodeList::eraseFront() {
-    Node* old = header->next;
-    header->next = old->next;
-    delete old;
-    old = nullptr;
+    erase(begin());
 }
 
 void NodeList::eraseBack() {
-    Node* old = trailer->prev;
-    trailer->prev = old->prev;
-    delete old;
-    old = nullptr;
+    erase(--end());
 }
 
 void NodeList::erase(const NodeList::Iterator &p) {
     p.v->prev->next = p.v->next;
     p.v->next->prev = p.v->prev;
     delete p.v;
+    --n;
 }
 
 NodeList::Iterator::Iterator(Node* u) {
