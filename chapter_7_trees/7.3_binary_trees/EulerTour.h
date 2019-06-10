@@ -1,3 +1,4 @@
+#include <iostream>
 template <typename E, typename R>
 //E is element type, R is result type
 class EulerTour {
@@ -41,3 +42,24 @@ int EulerTour<E, R>::eulerTour(const Position& p) const {
   }
   return result(r);
 }
+
+template<typename E, typename R>
+class EvaluateExpressionTour : public EulerTour<E, R> {
+  protected:
+    typedef typename EulerTour<E, R>::BinaryTree BinaryTree;
+    typedef typename EulerTour<E, R>::Position Position;
+    typedef typename EulerTour<E, R>::Result Result;
+  public:
+    void execute(const BinaryTree& T) {
+      initialize(T);
+      std::cout << "The value is: " << eulerTour(T.root()) << "\n";
+    }
+  protected:
+    virtual void visitExternal(const Position& p, Result& r) const {
+      r.finalResult = (*p).value();
+    }
+    virtual void visitRight(const Position& p, Result& r) const {
+      r.finalResult = (*p).operation(r.leftResult, r.finalResult);
+    }
+};
+//todo: change name of binary tree class
