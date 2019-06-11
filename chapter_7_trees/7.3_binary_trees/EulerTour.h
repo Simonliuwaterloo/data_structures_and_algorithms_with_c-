@@ -63,3 +63,29 @@ class EvaluateExpressionTour : public EulerTour<E, R> {
     }
 };
 //todo: change name of binary tree class
+template<typename E, typename R>
+class PrintExpressionTour : public EulerTour<E, R> {
+  protected:
+    typedef typename EulerTour<E, R>::BinaryTree BinaryTree;
+    typedef typename EulerTour<E, R>::Position Position;
+    typedef typename EulerTour<E, R>::Result Result;
+  public:
+    void execute(const BinaryTree& T) {
+      initialize(T);
+      std::cout << "Expression: " << eulerTour(T.root()) << std::endl;
+    }
+  protected:
+    virtual void visitExternal(const Position& p, Result& r) const {
+      (*p).print();
+    }
+      
+    virtual void visitBelow(const Position& p, Result& r) const {
+      (*p).print();
+    }
+    virtual void visitLeft(const Position& p, Result& r) const {
+      std::cout << "(";
+    }
+    virtual void visitRight(const Position& p, Result& r) const {
+      std::cout << ")";
+    }
+};
