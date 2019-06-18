@@ -50,7 +50,7 @@ class VectorCompleteTree {
     Position pos(int i) {
       return V.begin() + i;
     }
-    int index(const Position& p) const {
+    int idx(const Position& p) const {
       return p - V.begin();
     }
 };
